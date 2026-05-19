@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { FiSun, FiMoon } from "react-icons/fi";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
@@ -17,15 +17,15 @@ const ThemeSwitch = () => {
   return (
     <button
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="p-1.5 rounded-xl border border-black/10 bg-white/80 shadow dark:bg-gray-700 dark:border-white/20 active:scale-90 transition-transform duration-200"
+      className="p-1.5 rounded-full border border-black/10 bg-white/80 shadow dark:bg-gray-700 dark:border-white/20 active:scale-90 transition-transform duration-200"
     >
       <div
         className={`transition-transform duration-500 ease-out ${isDark ? "rotate-180" : "rotate-0"}`}
       >
         {isDark ? (
-          <FiSun className="w-5 h-5 text-amber-500" />
+          <FaSun className="w-5 h-5 text-amber-500" />
         ) : (
-          <FiMoon className="w-5 h-5 text-indigo-600" />
+          <FaMoon className="w-5 h-5 text-slate-700" />
         )}
       </div>
     </button>
