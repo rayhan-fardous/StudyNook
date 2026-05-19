@@ -122,7 +122,7 @@ const Navbar = () => {
                     <div className="border-t border-zinc-100 dark:border-zinc-800 my-1.5" />
 
                     <button
-                      onClick={() => console.log("Logging out...")}
+                      onClick={async () => await authClient.signOut()}
                       className="flex items-center gap-2.5 px-3 py-2 text-sm font-medium text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/20 rounded-xl w-full text-left transition-all"
                     >
                       <FiLogOut className="w-4 h-4" />
