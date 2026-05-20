@@ -15,6 +15,7 @@ import {
 } from "react-icons/fi";
 import { useState, useEffect } from "react";
 import { authClient } from "@/lib/auth-client";
+import { FaBookOpen } from "react-icons/fa";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,9 +49,10 @@ const Navbar = () => {
 
           <Link
             href="/"
-            className="text-xl font-bold tracking-tight text-indigo-600 dark:text-indigo-400"
+            className="flex items-center gap-2 text-xl font-bold tracking-tight text-cyan-500 dark:text-cyan-400"
           >
-            StudyNook
+            <FaBookOpen className="text-2xl" />
+            <span>StudyNook</span>
           </Link>
         </div>
 
