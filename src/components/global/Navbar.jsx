@@ -56,7 +56,7 @@ const Navbar = () => {
 
         <div className="hidden md:block">
           {" "}
-          <ul className="flex items-center gap-8 font-medium text-sm text-zinc-600 dark:text-zinc-300">
+          <ul className="flex items-center gap-8 font-medium text-md text-zinc-600 dark:text-zinc-300">
             <li className="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors">
               <Link href="/">Home</Link>
             </li>
@@ -138,7 +138,7 @@ const Navbar = () => {
                 <Button
                   variant="outline"
                   size="sm"
-                  className="font-medium rounded-xl border-black/10 dark:border-white/20 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                  className="font-medium  border-black/10 dark:border-white/20 hover:bg-zinc-100 dark:hover:bg-zinc-800"
                 >
                   <FiLogIn />
                   Login
@@ -147,7 +147,7 @@ const Navbar = () => {
               <Link href="/register">
                 <Button
                   size="sm"
-                  className="font-medium rounded-xl bg-indigo-600 text-white shadow-md hover:bg-indigo-500 shadow-indigo-600/20 active:scale-95 transition-transform"
+                  className="font-medium bg-indigo-600 text-white shadow-md hover:bg-indigo-500 shadow-indigo-600/20 active:scale-95 transition-transform"
                 >
                   <FiUserCheck />
                   Register

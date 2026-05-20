@@ -1,5 +1,6 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Description,
@@ -11,88 +12,57 @@ import {
   InputGroup,
 } from "@heroui/react";
 import { Eye, EyeSlash } from "@gravity-ui/icons";
-import Link from "next/link";
+
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import { authClient } from "@/lib/auth-client";
+import Link from "next/link";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
-const RegistrationForm = () => {
+const LoginForm = () => {
   const router = useRouter();
+
   const [isVisible, setIsVisible] = useState(false);
+
   const onSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
+    const formData = new FormData(e.target);
     const userData = Object.fromEntries(formData.entries());
-    console.log("User Data =>", userData);
 
-    const { data, error } = await authClient.signUp.email({
-      name: userData.name,
+    const { error } = await authClient.signIn.email({
       email: userData.email,
       password: userData.password,
-      image: userData.photo,
+      rememberMe: true,
       callbackURL: "/",
     });
     if (error) {
       toast.error(error.message);
     } else {
-      router.push("/login");
+      toast.success("Login successful! Redirecting...");
+      router.push("/");
     }
   };
 
   const handleGoogleLogin = async () => {
-    try {
-      await authClient.signIn.social({
-        provider: "google",
-        callbackURL: "/",
-      });
-    } catch (error) {
-      toast.error("Google sign in failed");
-      console.log(error);
-    }
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
   };
 
   return (
     <Form
-      onSubmit={onSubmit}
       className="flex w-full max-w-md flex-col gap-5 shadow-2xl shadow-indigo-600/10 dark:shadow-black/40 rounded-3xl border border-zinc-200/60 dark:border-zinc-800/80 p-6 md:p-8 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-xl"
+      onSubmit={onSubmit}
     >
       <div className="space-y-1 text-center">
         <h2 className="text-2xl md:text-3xl font-extrabold tracking-tight bg-indigo-600 bg-clip-text text-transparent">
-          Create an Account
+          Login
         </h2>
-        <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400">
-          Book your study space easily with StudyNook
-        </p>
+        
       </div>
 
       <TextField
         isRequired
-        name="name"
-        type="text"
-        className="w-full flex flex-col gap-1.5"
-        validate={(value) => {
-          if (value.length < 2) {
-            return "Name must be at least 2 characters";
-          }
-          return null;
-        }}
-      >
-        <Label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-          Name
-        </Label>
-        <Input
-          placeholder="Enter your name"
-          className="h-12 text-sm rounded-xl border-zinc-200 dark:border-zinc-800 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 bg-zinc-50/50 dark:bg-zinc-950/50 transition-all duration-200"
-        />
-        <FieldError className="text-xs font-medium text-rose-500 mt-0.5" />
-      </TextField>
-
-      <TextField
-        isRequired
-        name="email"
-        type="email"
         className="w-full flex flex-col gap-1.5"
         validate={(value) => {
           if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
@@ -105,36 +75,9 @@ const RegistrationForm = () => {
           Email
         </Label>
         <Input
-          placeholder="Enter your email"
-          className="h-12 text-sm rounded-xl border-zinc-200 dark:border-zinc-800 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 bg-zinc-50/50 dark:bg-zinc-950/50 transition-all duration-200"
-        />
-        <FieldError className="text-xs font-medium text-rose-500 mt-0.5" />
-      </TextField>
-      <TextField
-        isRequired
-        name="photo"
-        className="w-full flex flex-col gap-1.5"
-        validate={(value) => {
-          const trimmedValue = value.trim();
-
-          if (trimmedValue === "") {
-            return "Image URL is required";
-          }
-
-          const urlPattern = /^(https?:\/\/.+)$/i;
-          if (!urlPattern.test(trimmedValue)) {
-            return "Please enter a valid image URL (jpg, png, webp, etc.)";
-          }
-
-          return null;
-        }}
-      >
-        <Label className="text-sm font-semibold text-zinc-700 dark:text-zinc-300">
-          Photo Url
-        </Label>
-        <Input
-          type="url"
-          placeholder="https://example.com/photo.jpg"
+          name="email"
+          type="email"
+          placeholder="Enter your email address"
           className="h-12 text-sm rounded-xl border-zinc-200 dark:border-zinc-800 focus-within:border-indigo-500 focus-within:ring-2 focus-within:ring-indigo-500/20 bg-zinc-50/50 dark:bg-zinc-950/50 transition-all duration-200"
         />
         <FieldError className="text-xs font-medium text-rose-500 mt-0.5" />
@@ -195,9 +138,9 @@ const RegistrationForm = () => {
       <div className="flex gap-2 pt-2">
         <Button
           type="submit"
-          className="w-full h-12 text-sm font-semibold text-white bg-indigo-600 hover:bg-linear-to-r hover:from-indigo-500 hover:to-pink-500 shadow-md shadow-indigo-600/20 rounded-xl transition-all duration-200 active:scale-98"
+          className="w-full h-12 text-sm font-semibold text-white bg-indigo-600 hover:from-indigo-500 hover:to-pink-500 shadow-md shadow-indigo-600/20 rounded-xl transition-all duration-200 active:scale-98"
         >
-          Create Account
+          Login
         </Button>
       </div>
 
@@ -211,7 +154,6 @@ const RegistrationForm = () => {
 
       <div className="flex flex-col gap-3 items-center justify-center">
         <Button
-          type="button"
           onClick={handleGoogleLogin}
           variant="secondary"
           className="h-12 w-full font-medium rounded-xl text-zinc-700 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800/60 shadow-xs transition-all duration-200 active:scale-98"
@@ -223,12 +165,12 @@ const RegistrationForm = () => {
 
       <div className="flex items-center justify-center pt-1">
         <p className="text-sm text-zinc-500 dark:text-zinc-400">
-          Already have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
-            href="/login"
+            href="/register"
             className="font-semibold text-indigo-600 dark:text-indigo-400 hover:underline"
           >
-            Login
+            Register
           </Link>
         </p>
       </div>
@@ -236,4 +178,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default LoginForm;
