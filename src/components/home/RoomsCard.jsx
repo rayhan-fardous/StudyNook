@@ -100,7 +100,7 @@ const RoomsCard = ({ room }) => {
           )}
         </div>
 
-        <Link href={`/${_id}`} className="mt-6">
+        <Link href={`/room-details/${_id}`} className="mt-6">
           <div className="relative group/button">
             <div className="absolute -inset-1 rounded-full bg-cyan-500/30 blur-lg opacity-0 group-hover/button:opacity-100 transition duration-300"></div>
 

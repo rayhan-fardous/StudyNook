@@ -37,6 +37,14 @@ const AddNewRoomForm = () => {
   const router = useRouter();
 
   const userId = data?.user?.id;
+  const userName = data?.user?.name;
+  const userImage = data?.user?.image;
+  const userEmail = data?.user?.email;
+  const formattedDate = new Date().toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -57,6 +65,10 @@ const AddNewRoomForm = () => {
       bookings: Number(restData.bookings),
       amenities: selectedAmenities,
       ownerId: userId,
+      ownerName: userName,
+      ownerImage: userImage,
+      ownerEmail: userEmail,
+      listedDate: formattedDate,
     };
 
     try {
@@ -82,9 +94,7 @@ const AddNewRoomForm = () => {
         toast.error(data?.message || "Failed to add room");
       }
 
-      console.log("Server Data =>", data);
     } catch (error) {
-      console.log(error);
 
       toast.error("Something went wrong!");
     }

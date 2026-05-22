@@ -19,7 +19,7 @@ const MyListingsPage = async () => {
   const userId = session?.user?.id;
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/${userId}`,
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/owner/${userId}`,
     {
       cache: "no-store",
     }
