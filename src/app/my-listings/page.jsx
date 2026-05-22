@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "StudyNook - My Listings",
+};
+
 import Link from "next/link";
 import RoomsCard from "@/components/home/RoomsCard";
 import { auth } from "@/lib/auth";

@@ -1,3 +1,7 @@
+export const metadata = {
+  title: "StudyNook - My Bookings",
+};
+
 import CancelBtn from "@/components/my-bookings/CancelBtn";
 import { auth } from "@/lib/auth";
 

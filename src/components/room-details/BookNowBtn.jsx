@@ -77,13 +77,13 @@ const BookNowBtn = ({ room }) => {
   });
 
   const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   const userId = session?.user?.id;
   const userName = session?.user?.name;
   const userImage = session?.user?.image;
   const userEmail = session?.user?.email;
 
-  /* Submit */
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -96,61 +96,46 @@ const BookNowBtn = ({ room }) => {
     const formData = new FormData(e.target);
 
     const restData = Object.fromEntries(formData.entries());
+    const startHour = Number(startTime.split(":")[0]);
+    const endHour = Number(endTime.split(":")[0]);
 
     const bookingData = {
       roomId: _id,
       roomName: name,
       date: formattedDate,
-      startTime,
-      endTime,
-
-      userId,
-      userName,
-      userImage,
-      userEmail,
-
+      startTime: startHour,
+      endTime: endHour,
+      userId: userId,
+      userName: userName,
+      userImage: userImage,
+      userEmail: userEmail,
       notes: restData.notes,
-
       totalCost: calculateTotal(),
-
       status: "Confirmed",
-
-      image,
+      image: image,
     };
 
-    try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(bookingData),
-        },
-      );
-
-      const data = await res.json();
-
-      if (data.insertedId) {
-        toast.success("Room booked successfully!", {
-          position: "top-center",
-        });
-
-        router.refresh();
-      } else {
-        toast.error("Booking failed!", {
-          position: "top-center",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-
-      toast.error("Something went wrong!", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(bookingData),
+    });
+    const data = await res.json();
+    if (data.insertedId) {
+      toast.success("Room booked successfully!", {
         position: "top-center",
       });
+      router.refresh("/my-bookings");
+    }
+    if (!res.ok) {
+      toast.error(
+        "This time slot is already booked. Please choose another time.",
+        {
+          position: "top-center",
+        },
+      );
     }
   };
 

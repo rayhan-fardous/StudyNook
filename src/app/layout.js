@@ -10,7 +10,7 @@ const josefinSans = Josefin_Sans({
 });
 
 export const metadata = {
-  title: "StudyNook",
+  title: "StudyNook - Home",
   description: "Library Study Room Booking",
 };
 
