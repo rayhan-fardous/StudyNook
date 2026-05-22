@@ -10,6 +10,8 @@ import {
   IoCalendarOutline,
   IoCheckmarkCircle,
 } from "react-icons/io5";
+import EditForm from "./EditForm";
+import DeleteBtn from "./DeleteBtn";
 
 const RoomDetails = async ({ room }) => {
   const session = await auth.api.getSession({
@@ -65,7 +67,7 @@ const RoomDetails = async ({ room }) => {
               </h1>
 
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Listed on {listedDate || "20 May 2024"}
+                Listed on {listedDate}
               </p>
             </div>
 
@@ -141,16 +143,9 @@ const RoomDetails = async ({ room }) => {
 
             {userId === ownerId && (
               <div className="grid grid-cols-2 gap-4">
-                <Button
-                  variant="outline"
-                  className="rounded-xl border-gray-300 dark:border-gray-600"
-                >
-                  Edit
-                </Button>
+                <EditForm room={room} />
 
-                <Button variant="danger-soft" className="rounded-xl">
-                  Delete
-                </Button>
+                <DeleteBtn room={room} />
               </div>
             )}
           </div>

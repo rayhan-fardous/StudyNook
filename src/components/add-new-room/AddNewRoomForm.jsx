@@ -71,7 +71,6 @@ const AddNewRoomForm = () => {
       listedDate: formattedDate,
     };
 
-    try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/rooms`, {
         method: "POST",
         headers: {
@@ -82,21 +81,15 @@ const AddNewRoomForm = () => {
 
       const data = await res.json();
 
-      if (res.ok) {
-        toast.success("Room added successfully!");
-
-        e.target.reset();
-
-        setTimeout(() => {
-          router.push("/rooms");
-        }, 1500);
-      } else {
-        toast.error(data?.message || "Failed to add room");
-      }
-
-    } catch (error) {
-
-      toast.error("Something went wrong!");
+      if (data.insertedId) {
+      toast.success("Room created successfully!", {
+        position: "top-center",
+      });
+      router.push("/my-listings");
+    } else{
+      toast.error("Failed to create room!", {
+        position: "top-center",
+      });
     }
   };
 
