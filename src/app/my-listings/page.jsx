@@ -16,6 +16,10 @@ import {
 } from "react-icons/io5";
 
 const MyListingsPage = async () => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -25,7 +29,9 @@ const MyListingsPage = async () => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/rooms/owner/${userId}`,
     {
-      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     }
   );
 
