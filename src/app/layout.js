@@ -1,13 +1,17 @@
 import { Josefin_Sans } from "next/font/google";
 import "./globals.css";
+
 import NextThemeProvider from "./providers/NextThemeProvider";
 import { ToastContainer } from "react-toastify";
-import Navbar from './../components/global/Navbar';
-import Footer from './../components/global/Footer';
+
+import Navbar from "../components/global/Navbar";
+import Footer from "../components/global/Footer";
 
 const josefinSans = Josefin_Sans({
+  subsets: ["latin"],
   variable: "--font-josefin-sans",
 });
+
 
 export const metadata = {
   title: "StudyNook - Home",
