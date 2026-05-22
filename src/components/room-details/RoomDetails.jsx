@@ -12,6 +12,7 @@ import {
 } from "react-icons/io5";
 import EditForm from "./EditForm";
 import DeleteBtn from "./DeleteBtn";
+import BookNowBtn from "./BookNowBtn";
 
 const RoomDetails = async ({ room }) => {
   const session = await auth.api.getSession({
@@ -136,10 +137,7 @@ const RoomDetails = async ({ room }) => {
               </div>
             </div>
 
-            <Button className="w-full h-12 rounded-xl bg-linear-to-r from-indigo-600 to-violet-500 hover:from-indigo-500 hover:to-pink-500 text-white font-semibold shadow-lg shadow-indigo-600/20 transition-all duration-300">
-              <IoCalendarOutline className="text-lg" />
-              Book Now
-            </Button>
+            <BookNowBtn room={room} />
 
             {userId === ownerId && (
               <div className="grid grid-cols-2 gap-4">
