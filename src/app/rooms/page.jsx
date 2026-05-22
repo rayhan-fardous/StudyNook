@@ -28,7 +28,7 @@ const RoomsPage = async ({ searchParams }) => {
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
         <div className="mb-10 sm:mb-14">
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-slate-900 dark:text-white leading-tight">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-900 dark:text-white leading-tight">
             Explore <span className="text-cyan-500">Study Rooms</span>
           </h1>
 
